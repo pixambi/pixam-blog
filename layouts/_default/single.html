@@ -11,7 +11,7 @@
                 {{ if .Params.avatar }}
                     <div class="level-item">
                         <figure class="image is-32x32">
-                            <img src="{{ relURL .Params.avatar }}" class="is-rounded" alt="Author avatar" loading="lazy">
+                            <img src="{{ .Params.avatar | relURL }}" class="is-rounded" alt="Author avatar" loading="lazy">
                         </figure>
                     </div>
                 {{ end }}
@@ -27,7 +27,7 @@
             <div class="level-right">
                 <div class="tags">
                     {{ range .Params.categories }}
-                        <a href="{{ relURL (printf "/categories/%s/" (urlize .)) }}" class="tag is-link">{{ . }}</a>
+                        <a href="{{ printf "categories/%s" (. | urlize) | relURL }}" class="tag is-link">{{ . }}</a>
                     {{ end }}
                 </div>
             </div>
@@ -35,7 +35,7 @@
 
         {{ if .Params.imageBig }}
             <figure class="image">
-                <img src="{{ relURL .Params.imageBig }}" alt="{{ .Title }}" class="mb-4">
+                <img src="{{ .Params.imageBig | relURL }}" alt="{{ .Title }}" class="mb-4">
             </figure>
         {{ end }}
 

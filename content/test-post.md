@@ -4,11 +4,11 @@ date = 2024-09-07T22:56:28+10:00
 draft = false
 
 description = "some empty post"
-image = "/images/cosmic-kirby.jpeg"
-imageBig = "/images/cosmic-kirby.jpeg"
+image = "images/cosmic-kirby.jpeg"
+imageBig = "images/cosmic-kirby.jpeg"
 categories = ["blank"]
 authors = ["Pixam"]
-avatar = "/images/avatar.webp"
+avatar = "images/avatar.webp"
 +++
 wergawerhwerhwergawerhwerhwergawerhwerhwergawerhwerhwergawerhwerhw
 
