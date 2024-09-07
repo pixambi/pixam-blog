@@ -3,7 +3,7 @@
         {{ if eq .RelPermalink "/categories/" }}
             <div class="tags are-medium">
                 {{ range $.Site.Taxonomies.categories.ByCount }}
-                    <a class="tag is-link" href="{{ "/categories/" | relURL }}{{ .Name | urlize }}">
+                    <a class="tag is-link" href="{{ .Page.RelPermalink }}">
                         {{ .Name }} ({{ .Count }})
                     </a>
                 {{ end }}
@@ -18,7 +18,7 @@
                                     {{ if .Params.image }}
                                         <div class="media-left">
                                             <figure class="image is-128x128">
-                                                <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" loading="lazy">
+                                                <img src="{{ relURL .Params.image }}" alt="{{ .Title }}" loading="lazy">
                                             </figure>
                                         </div>
                                     {{ end }}
@@ -32,7 +32,7 @@
                                                 {{ if .Params.avatar }}
                                                     <div class="level-item">
                                                         <figure class="image is-32x32">
-                                                            <img class="is-rounded" src="{{ .Params.avatar | relURL }}" alt="avatar" loading="lazy">
+                                                            <img class="is-rounded" src="{{ relURL .Params.avatar }}" alt="avatar" loading="lazy">
                                                         </figure>
                                                     </div>
                                                 {{ end }}
@@ -42,13 +42,13 @@
                                                     {{ end }}
                                                 </div>
                                                 <div class="level-item">
-                                                    {{ dateFormat .Site.Params.dateFormat .Date }}
+                                                    {{ .Date.Format .Site.Params.dateFormat }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="tags">
                                             {{ range .Params.categories }}
-                                                <a class="tag is-link is-light" href="{{ "/categories/" | relURL }}{{ . | urlize }}">{{ . }}</a>
+                                                <a class="tag is-link is-light" href="{{ relURL (printf "/categories/%s/" (urlize .)) }}">{{ . }}</a>
                                             {{ end }}
                                         </div>
                                     </div>
