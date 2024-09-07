@@ -24,7 +24,9 @@
                                     {{ end }}
                                     <div class="media-content">
                                         <p class="title is-4"><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>
-                                        <p class="subtitle is-6">{{ .Params.description }}</p>
+                                        {{ if .Params.description }}
+                                            <p class="subtitle is-6">{{ .Params.description }}</p>
+                                        {{ end }}
                                         <div class="level">
                                             <div class="level-left">
                                                 {{ if .Params.avatar }}
@@ -35,8 +37,8 @@
                                                     </div>
                                                 {{ end }}
                                                 <div class="level-item">
-                                                    {{ range (.GetTerms "authors") }}
-                                                        <a href="{{ .RelPermalink }}">{{ .Name }}</a>
+                                                    {{ range .Params.authors }}
+                                                        {{ . }}
                                                     {{ end }}
                                                 </div>
                                                 <div class="level-item">
@@ -45,8 +47,8 @@
                                             </div>
                                         </div>
                                         <div class="tags">
-                                            {{ range (.GetTerms "categories") }}
-                                                <a class="tag is-link is-light" href="{{ .RelPermalink }}">{{ .Name }}</a>
+                                            {{ range .Params.categories }}
+                                                <a class="tag is-link is-light" href="{{ "/categories/" | relURL }}{{ . | urlize }}">{{ . }}</a>
                                             {{ end }}
                                         </div>
                                     </div>

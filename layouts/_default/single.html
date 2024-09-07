@@ -1,53 +1,46 @@
 {{ define "main" }}
-    <h1 id="title" class="title is-2">{{ .Title }}</h1>
+    <article class="content">
+        <h1 class="title is-1">{{ .Title }}</h1>
 
-    {{ with .Params.description }}
-        <p>{{ . }}</p>
-    {{ end }}
+        {{ if .Params.description }}
+            <p class="subtitle is-4">{{ .Params.description }}</p>
+        {{ end }}
 
-    <div class="level">
-        <div class="level-left">
-            {{ if .Params.avatar }}
+        <div class="level">
+            <div class="level-left">
+                {{ if .Params.avatar }}
+                    <div class="level-item">
+                        <figure class="image is-32x32">
+                            <img src="{{ .Params.avatar | relURL }}" class="is-rounded" alt="Author avatar" loading="lazy">
+                        </figure>
+                    </div>
+                {{ end }}
                 <div class="level-item">
-                    <figure class="image is-32x32">
-                        <img src="{{ .Params.avatar | relURL }}" class="is-rounded" loading="lazy" alt="{{ .Params.avatarAlt | default "Author avatar" }}">
-                    </figure>
-                </div>
-            {{ end }}
-            <div class="level-item">
-                {{ with (.GetTerms "authors") }}
-                    {{ range . }}
-                        <a href="{{ .RelPermalink }}">{{ .Name }}</a>
+                    {{ range .Params.authors }}
+                        {{ . }}
                     {{ end }}
-                {{ else }}
-                    Anonymous
-                {{ end }}
+                </div>
+                <div class="level-item">
+                    {{ .Date.Format .Site.Params.dateFormat }}
+                </div>
             </div>
-            <div class="level-item">
-                {{ .Date.Format .Site.Params.dateFormat }}
-            </div>
-        </div>
-        <div class="level-right">
-            <div class="tags">
-                {{ range (.GetTerms "categories") }}
-                    <a href="{{ .RelPermalink }}" class="tag is-link" aria-label="Category: {{ .Name }}">{{ .Name }}</a>
-                {{ end }}
+            <div class="level-right">
+                <div class="tags">
+                    {{ range .Params.categories }}
+                        <a href="{{ "/categories/" | relURL }}{{ . | urlize }}" class="tag is-link">{{ . }}</a>
+                    {{ end }}
+                </div>
             </div>
         </div>
-    </div>
 
-    {{ with .Params.imageBig }}
-        <figure class="image">
-            <img src="{{ . | relURL }}" class="mb-4" alt="{{ $.Title }}">
-        </figure>
-    {{ end }}
+        {{ if .Params.imageBig }}
+            <figure class="image">
+                <img src="{{ .Params.imageBig | relURL }}" alt="{{ .Title }}" class="mb-4">
+            </figure>
+        {{ end }}
 
-    <div class="columns">
-        <div class="column is-9">
+        <div class="content">
             {{ .Content }}
         </div>
-        <div class="column is-3">
-            {{ partial "rightBar" . }}
-        </div>
-    </div>
+    </article>
 {{ end }}

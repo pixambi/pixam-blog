@@ -9,34 +9,40 @@
         <div class="list">
             {{ range .Paginator.Pages }}
                 <div class="listItem">
-                    <img
-                            src="{{ .Params.image | relURL }}"
-                            alt="{{.Title}}"
-                            class="listItemImage"
-                            loading="lazy"
-                    />
+                    {{ if .Params.image }}
+                        <img
+                                src="{{ .Params.image | relURL }}"
+                                alt="{{.Title}}"
+                                class="listItemImage"
+                                loading="lazy"
+                        />
+                    {{ end }}
                     <div class="listItemTexts">
                         <h1 class="listItemTitle">
                             <a href="{{ .RelPermalink }}">{{.Title}}</a>
                         </h1>
-                        <p class="listItemDesc">{{.Params.description}}</p>
+                        {{ if .Params.description }}
+                            <p class="listItemDesc">{{.Params.description}}</p>
+                        {{ end }}
                         <div class="listItemDetail">
-                            <img
-                                    src="{{ .Params.avatar | relURL }}"
-                                    loading="lazy"
-                                    alt=""
-                                    class="listItemAvatar"
-                            />
+                            {{ if .Params.avatar }}
+                                <img
+                                        src="{{ .Params.avatar | relURL }}"
+                                        loading="lazy"
+                                        alt="Author avatar"
+                                        class="listItemAvatar"
+                                />
+                            {{ end }}
                             <span>
-                                {{ range (.GetTerms "authors")}}
-                                    <a href="{{ .RelPermalink }}">{{ .Name }}</a>
-                                {{end}}
+                                {{ range .Params.authors }}
+                                    {{ . }}
+                                {{ end }}
                             </span>
                             <time>{{ dateFormat .Site.Params.dateFormat .Date}}</time>
                         </div>
                         <div class="listItemCategories">
-                            {{ range (.GetTerms "categories") }}
-                                <a class="listItemCategory" href="{{ .RelPermalink }}">{{ .Name }}</a>
+                            {{ range .Params.categories }}
+                                <a class="listItemCategory" href="{{ "/categories/" | relURL }}{{ . | urlize }}">{{ . }}</a>
                             {{ end }}
                         </div>
                     </div>
