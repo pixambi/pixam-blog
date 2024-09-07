@@ -3,9 +3,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ .Title }} - {{ .Site.Title }}</title>
     <script src="https://kit.fontawesome.com/ecf7af0db5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     {{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
     {{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
     {{ hugo.Generator }}
-    <link rel="stylesheet" href="{{ "styles/style.css" | relURL }}">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;300&display=swap" rel="stylesheet">
 </head>

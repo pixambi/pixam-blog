@@ -1,43 +1,55 @@
 {{ define "main" }}
-    <div class="single">
-        <div class="singleHead">
-            <div class="singleHeadTexts">
-                <h1 class="singleHeadTitle">{{ .Title }}</h1>
-                {{ with .Params.description }}
-                    <p class="singleHeadDescription">{{ . }}</p>
+    <article class="content">
+        <h1 class="title is-2">{{ .Title }}</h1>
+
+        {{ with .Params.description }}
+            <p class="subtitle is-4">{{ . }}</p>
+        {{ end }}
+
+        <div class="level">
+            <div class="level-left">
+                {{ if .Params.avatar }}
+                    <div class="level-item">
+                        <figure class="image is-32x32">
+                            <img class="is-rounded" src="{{ .Params.avatar }}" alt="{{ .Params.avatarAlt | default "Author avatar" }}" loading="lazy">
+                        </figure>
+                    </div>
                 {{ end }}
-                <div class="singleHeadDetail">
-                    {{ with .Params.avatar }}
-                        <img src="{{ . }}" alt="{{ $.Params.avatarAlt | default "Author avatar" }}" class="singleAvatar" loading="lazy">
-                    {{ end }}
+                <div class="level-item">
                     {{ with (.GetTerms "authors") }}
-                        <span>
                         {{ range . }}
                             <a href="{{ .Permalink }}">{{ .Name }}</a>
                         {{ end }}
-                    </span>
                     {{ else }}
-                        <span>Anonymous</span>
-                    {{ end }}
-                    {{ range (.GetTerms "categories") }}
-                        <a href="{{ .Permalink }}" class="singleCategory" aria-label="Category: {{ .Name }}">
-                            {{ .Name }}
-                        </a>
+                        Anonymous
                     {{ end }}
                 </div>
-                <time>{{ .Date.Format .Site.Params.dateFormat }}</time>
+                <div class="level-item">
+                    {{ .Date.Format .Site.Params.dateFormat }}
+                </div>
             </div>
-            {{ with .Params.imageBig }}
-                <img src="{{ . }}" alt="{{ $.Title }}" class="singleHeadImage">
-            {{ end }}
+            <div class="level-right">
+                <div class="tags">
+                    {{ range (.GetTerms "categories") }}
+                        <a class="tag is-link" href="{{ .Permalink }}" aria-label="Category: {{ .Name }}">{{ .Name }}</a>
+                    {{ end }}
+                </div>
+            </div>
         </div>
-        <div class="singleBottom">
-            <div class="singleContent">
+
+        {{ with .Params.imageBig }}
+            <figure class="image">
+                <img src="{{ . }}" alt="{{ $.Title }}" class="mb-4">
+            </figure>
+        {{ end }}
+
+        <div class="columns">
+            <div class="column is-9">
                 {{ .Content }}
             </div>
-            <div class="singleRightBar">
+            <div class="column is-3">
                 {{ partial "rightBar" . }}
             </div>
         </div>
-    </div>
+    </article>
 {{ end }}

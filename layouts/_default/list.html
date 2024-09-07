@@ -1,31 +1,62 @@
 {{ define "main" }}
-    <div class="list">
-       {{ range .Paginator.Pages }}
-            <div class="listItem">
-                <img src={{ .Params.image }} alt={{ .Title }} class="listItemImage" loading="lazy">
-                <div class="listItemTexts">
-                    <h1 class="listItemTitle">
-                        <a href={{.Permalink}}>{{ .Title }}</a>
-                    </h1>
-                    <p class="listItemDescription">{{.Params.Description}}</p>
-                    <div class="listItemDetail">
-                        <img src={{ .Params.avatar }} alt="avatar" class="listItemAvatar" loading="lazy">
-                        <span>
-                            {{ range (.GetTerms "authors")}}
-                                <a href={{ .Permalink }}>{{ .Name }}</a>
-                            {{ end }}
-                        </span>
-                        <time>{{ .Date.Format .Site.Params.dateFormat }}</time>
-                    </div>
-                    <div class="listItemCategories">
-                        {{ range (.GetTerms "categories") }}
-                            <a class="listItemCategory" href={{ .Permalink }}>{{ .Name }}</a>
-                        {{ end }}
-                    </div>
-                </div>
+    <div class="content">
+        {{ if eq .RelPermalink "/categories/" }}
+            <div class="tags are-medium">
+                {{ range $.Site.Taxonomies.categories.ByCount }}
+                    <a class="tag is-link" href="/categories/{{ .Name | urlize }}">
+                        {{ .Name }} ({{ .Count }})
+                    </a>
+                {{ end }}
             </div>
-       {{ end }}
-
-        {{ template "_internal/pagination.html" . }}
+        {{ else }}
+            <div class="columns is-multiline">
+                {{ range .Paginator.Pages }}
+                    <div class="column is-12 mb-5">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="media">
+                                    {{ if .Params.image }}
+                                        <div class="media-left">
+                                            <figure class="image is-128x128">
+                                                <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+                                            </figure>
+                                        </div>
+                                    {{ end }}
+                                    <div class="media-content">
+                                        <p class="title is-4"><a href="{{ .Permalink }}">{{ .Title }}</a></p>
+                                        <p class="subtitle is-6">{{ .Params.description }}</p>
+                                        <div class="level">
+                                            <div class="level-left">
+                                                {{ if .Params.avatar }}
+                                                    <div class="level-item">
+                                                        <figure class="image is-32x32">
+                                                            <img class="is-rounded" src="{{ .Params.avatar }}" alt="avatar" loading="lazy">
+                                                        </figure>
+                                                    </div>
+                                                {{ end }}
+                                                <div class="level-item">
+                                                    {{ range (.GetTerms "authors") }}
+                                                        <a href="{{ .Permalink }}">{{ .Name }}</a>
+                                                    {{ end }}
+                                                </div>
+                                                <div class="level-item">
+                                                    {{ dateFormat .Site.Params.dateFormat .Date }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tags">
+                                            {{ range (.GetTerms "categories") }}
+                                                <a class="tag is-link is-light" href="{{ .Permalink }}">{{ .Name }}</a>
+                                            {{ end }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{ end }}
+            </div>
+            {{ template "_internal/pagination.html" . }}
+        {{ end }}
     </div>
 {{ end }}

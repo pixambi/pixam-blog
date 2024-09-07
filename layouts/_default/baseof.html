@@ -1,12 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-{{ partial "header" . }}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Site.Title }}</title>
+</head>
 <body>
+{{ partial "header" . }}
+
 <div class="container">
     {{ partial "navbar" . }}
-    {{ block "main" . }} {{ end }}
+    <main class="section">
+        {{ block "main" . }} {{ end }}
+    </main>
     {{ partial "footer" . }}
 </div>
-<script src="{{ "js/app.js" | relURL }}"></script>
 </body>
 </html>
