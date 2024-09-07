@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ .Site.LanguageCode }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Site.Title }}</title>
+    <title>{{ .Title }} | {{ .Site.Title }}</title>
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
 </head>
 <body>
 {{ partial "header" . }}
 
 <div class="container">
     {{ partial "navbar" . }}
-    <main class="section">
+
+    <section class="section" role="main">
         {{ block "main" . }} {{ end }}
-    </main>
+    </section>
+
     {{ partial "footer" . }}
 </div>
+
+<script src="{{ "js/main.js" | relURL }}"></script>
 </body>
 </html>

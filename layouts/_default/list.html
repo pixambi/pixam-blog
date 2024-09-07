@@ -3,7 +3,7 @@
         {{ if eq .RelPermalink "/categories/" }}
             <div class="tags are-medium">
                 {{ range $.Site.Taxonomies.categories.ByCount }}
-                    <a class="tag is-link" href="/categories/{{ .Name | urlize }}">
+                    <a class="tag is-link" href="{{ "/categories/" | relURL }}{{ .Name | urlize }}">
                         {{ .Name }} ({{ .Count }})
                     </a>
                 {{ end }}
@@ -18,25 +18,25 @@
                                     {{ if .Params.image }}
                                         <div class="media-left">
                                             <figure class="image is-128x128">
-                                                <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+                                                <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" loading="lazy">
                                             </figure>
                                         </div>
                                     {{ end }}
                                     <div class="media-content">
-                                        <p class="title is-4"><a href="{{ .Permalink }}">{{ .Title }}</a></p>
+                                        <p class="title is-4"><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>
                                         <p class="subtitle is-6">{{ .Params.description }}</p>
                                         <div class="level">
                                             <div class="level-left">
                                                 {{ if .Params.avatar }}
                                                     <div class="level-item">
                                                         <figure class="image is-32x32">
-                                                            <img class="is-rounded" src="{{ .Params.avatar }}" alt="avatar" loading="lazy">
+                                                            <img class="is-rounded" src="{{ .Params.avatar | relURL }}" alt="avatar" loading="lazy">
                                                         </figure>
                                                     </div>
                                                 {{ end }}
                                                 <div class="level-item">
                                                     {{ range (.GetTerms "authors") }}
-                                                        <a href="{{ .Permalink }}">{{ .Name }}</a>
+                                                        <a href="{{ .RelPermalink }}">{{ .Name }}</a>
                                                     {{ end }}
                                                 </div>
                                                 <div class="level-item">
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="tags">
                                             {{ range (.GetTerms "categories") }}
-                                                <a class="tag is-link is-light" href="{{ .Permalink }}">{{ .Name }}</a>
+                                                <a class="tag is-link is-light" href="{{ .RelPermalink }}">{{ .Name }}</a>
                                             {{ end }}
                                         </div>
                                     </div>
