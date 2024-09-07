@@ -1,11 +1,43 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Single</title>
-</head>
-<body>
-    single
-</body>
-</html>
+{{ define "main" }}
+    <div class="single">
+        <div class="singleHead">
+            <div class="singleHeadTexts">
+                <h1 class="singleHeadTitle">{{ .Title }}</h1>
+                {{ with .Params.description }}
+                    <p class="singleHeadDescription">{{ . }}</p>
+                {{ end }}
+                <div class="singleHeadDetail">
+                    {{ with .Params.avatar }}
+                        <img src="{{ . }}" alt="{{ $.Params.avatarAlt | default "Author avatar" }}" class="singleAvatar" loading="lazy">
+                    {{ end }}
+                    {{ with (.GetTerms "authors") }}
+                        <span>
+                        {{ range . }}
+                            <a href="{{ .Permalink }}">{{ .Name }}</a>
+                        {{ end }}
+                    </span>
+                    {{ else }}
+                        <span>Anonymous</span>
+                    {{ end }}
+                    {{ range (.GetTerms "categories") }}
+                        <a href="{{ .Permalink }}" class="singleCategory" aria-label="Category: {{ .Name }}">
+                            {{ .Name }}
+                        </a>
+                    {{ end }}
+                </div>
+                <time>{{ .Date.Format .Site.Params.dateFormat }}</time>
+            </div>
+            {{ with .Params.imageBig }}
+                <img src="{{ . }}" alt="{{ $.Title }}" class="singleHeadImage">
+            {{ end }}
+        </div>
+        <div class="singleBottom">
+            <div class="singleContent">
+                {{ .Content }}
+            </div>
+            <div class="singleRightBar">
+                {{ partial "rightBar" . }}
+            </div>
+        </div>
+    </div>
+{{ end }}

@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+{{ partial "header" . }}
+<body>
+<div class="container">
+    {{ partial "navbar" . }}
+    {{ block "main" . }} {{ end }}
+    {{ partial "footer" . }}
+</div>
+<script src="{{ "js/app.js" | relURL }}"></script>
+</body>
+</html>

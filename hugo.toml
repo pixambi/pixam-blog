@@ -1,0 +1,12 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Pixam'
+
+pagination.pagerSize = 2
+
+[params]
+    dateFormat = "Jan 2, 2006"
+
+[taxonomies]
+    author = "authors"
+    category = "categories"
